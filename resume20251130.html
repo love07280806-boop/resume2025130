@@ -20,10 +20,11 @@
   </style>
 </head>
 <body>
-  <div class="resume" id="resume">
+  <div class="resume" id="resumeRoot">
     <div class="header">
       <label class="photo-wrap" title="點擊上傳照片">
-        <img id="photoPreview" src="IMG/IMG_0452.jpeg" alt="個人照片">
+        <!-- 替換下面連結成你自己的 GitHub Raw 照片連結 -->
+        <img id="photoPreview" src="YOUR_GITHUB_RAW_URL" alt="個人照片">
         <input type="file" class="photo-input" id="photoInput" accept="image/*">
       </label>
       <div class="info">
@@ -36,29 +37,37 @@
         </div>
       </div>
     </div>
+
     <section>
       <h3>學歷</h3>
       <p contenteditable="true">亞洲大學 經營管理系（預計 2026 畢業）</p>
     </section>
+
     <section>
       <h3>技能</h3>
       <p contenteditable="true">會計、財務分析、HTML/CSS/Git</p>
     </section>
+
     <section>
       <h3>經歷</h3>
       <p contenteditable="true">實習：某公司 行銷助理（2024 暑期）</p>
     </section>
+
     <section>
       <h3>自我介紹</h3>
       <p contenteditable="true">在校期間參與多項社團與專題，擅長整理報告與簡報，對數據與流程有耐心與細心。</p>
     </section>
+
     <button id="exportPdf">匯出 PDF</button>
+    <button id="printBtn">列印 / 存為 PDF</button>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <script>
     const photoInput = document.getElementById('photoInput');
     const photoPreview = document.getElementById('photoPreview');
+
+    // 點擊上傳替換照片即時預覽
     photoInput.addEventListener('change', e => {
       const file = e.target.files[0];
       if(file){
@@ -66,12 +75,18 @@
       }
     });
 
+    // 匯出 PDF
     document.getElementById('exportPdf').addEventListener('click', ()=>{
       html2pdf().set({
         margin:0.5,
-        filename:document.querySelector('.info h1').textContent + '.pdf',
+        filename: document.querySelector('.info h1').textContent + '.pdf',
         jsPDF:{unit:'in',format:'a4',orientation:'portrait'}
-      }).from(document.getElementById('resume')).save();
+      }).from(document.getElementById('resumeRoot')).save();
+    });
+
+    // 列印 / 存為 PDF
+    document.getElementById('printBtn').addEventListener('click', ()=>{
+      window.print();
     });
   </script>
 </body>
