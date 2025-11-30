@@ -23,8 +23,8 @@
   <div class="resume" id="resumeRoot">
     <div class="header">
       <label class="photo-wrap" title="點擊上傳照片">
-        <!-- 替換下面連結成你自己的 GitHub Raw 照片連結 -->
-        <img id="photoPreview" src="YOUR_GITHUB_RAW_URL" alt="個人照片">
+        <!-- 已經直接顯示照片 -->
+        <img id="photoPreview" src="https://raw.githubusercontent.com/love07280806-boop/resume2025130/main/IMG/IMG_0452.jpeg" alt="個人照片">
         <input type="file" class="photo-input" id="photoInput" accept="image/*">
       </label>
       <div class="info">
@@ -33,7 +33,8 @@
         <div class="contact">
           <span contenteditable="true">📧 114031089@live.asia.edu.tw</span>
           <span contenteditable="true">📍 彰化</span>
-          <span>📞 ***********</span>
+          <span id="phone">📞 ***********</span>
+          <button id="togglePhone" style="margin-left:5px;padding:2px 6px;font-size:12px;">顯示電話</button>
         </div>
       </div>
     </div>
@@ -67,11 +68,26 @@
     const photoInput = document.getElementById('photoInput');
     const photoPreview = document.getElementById('photoPreview');
 
-    // 點擊上傳替換照片即時預覽
-    photoInput.addEventListener('change', e => {
+    // 上傳照片即時預覽
+    photoInput.addEventListener('change', e=>{
       const file = e.target.files[0];
       if(file){
         photoPreview.src = URL.createObjectURL(file);
+      }
+    });
+
+    // 顯示 / 隱藏電話
+    const phoneEl = document.getElementById('phone');
+    const togglePhoneBtn = document.getElementById('togglePhone');
+    const realPhone = ""; // 可自行填入真實號碼
+    togglePhoneBtn.addEventListener('click', ()=>{
+      if(realPhone){
+        phoneEl.textContent = "📞 " + realPhone;
+        setTimeout(()=>{ phoneEl.textContent = "📞 ***********"; }, 10000);
+      } else {
+        const input = prompt("請輸入電話：");
+        if(input) phoneEl.textContent = "📞 " + input;
+        setTimeout(()=>{ phoneEl.textContent = "📞 ***********"; }, 10000);
       }
     });
 
