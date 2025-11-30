@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>個人履歷表</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:20px;display:flex;justify-content:center}
+    .resume{background:#fff;padding:20px;border-radius:10px;width:800px;max-width:95%;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+    .header{display:flex;gap:20px;margin-bottom:20px}
+    .photo-wrap{width:140px;height:140px;border-radius:10px;overflow:hidden;background:#eaeaea;position:relative;cursor:pointer}
+    .photo-wrap img{width:100%;height:100%;object-fit:cover}
+    .photo-input{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer}
+    .info h1{margin:0;font-size:24px}
+    .info p{margin:4px 0;color:#555}
+    .contact span{display:inline-block;background:#f0f0f0;padding:5px 10px;border-radius:15px;margin-right:10px;margin-top:5px}
+    section{margin-bottom:15px}
+    section h3{margin:0 0 5px 0;color:#333}
+    button{margin-top:10px;padding:8px 12px;background:#0ea5a4;color:white;border:none;border-radius:5px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="resume" id="resume">
+    <div class="header">
+      <label class="photo-wrap" title="點擊上傳照片">
+        <img id="photoPreview" src="IMG/IMG_0452.jpeg" alt="個人照片">
+        <input type="file" class="photo-input" id="photoInput" accept="image/*">
+      </label>
+      <div class="info">
+        <h1 contenteditable="true">吳旻臻</h1>
+        <p contenteditable="true">亞洲大學 經營管理系</p>
+        <div class="contact">
+          <span contenteditable="true">📧 114031089@live.asia.edu.tw</span>
+          <span contenteditable="true">📍 彰化</span>
+          <span>📞 ***********</span>
+        </div>
+      </div>
+    </div>
+    <section>
+      <h3>學歷</h3>
+      <p contenteditable="true">亞洲大學 經營管理系（預計 2026 畢業）</p>
+    </section>
+    <section>
+      <h3>技能</h3>
+      <p contenteditable="true">會計、財務分析、HTML/CSS/Git</p>
+    </section>
+    <section>
+      <h3>經歷</h3>
+      <p contenteditable="true">實習：某公司 行銷助理（2024 暑期）</p>
+    </section>
+    <section>
+      <h3>自我介紹</h3>
+      <p contenteditable="true">在校期間參與多項社團與專題，擅長整理報告與簡報，對數據與流程有耐心與細心。</p>
+    </section>
+    <button id="exportPdf">匯出 PDF</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    photoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if(file){
+        photoPreview.src = URL.createObjectURL(file);
+      }
+    });
+
+    document.getElementById('exportPdf').addEventListener('click', ()=>{
+      html2pdf().set({
+        margin:0.5,
+        filename:document.querySelector('.info h1').textContent + '.pdf',
+        jsPDF:{unit:'in',format:'a4',orientation:'portrait'}
+      }).from(document.getElementById('resume')).save();
+    });
+  </script>
+</body>
+</html>
